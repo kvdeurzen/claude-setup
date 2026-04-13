@@ -83,7 +83,7 @@ The `command` field is auto-generated at install time based on the script file's
 | [confluence-db](skills/confluence-db/) | User mentions "Confluence database" or wants to read/write a Confluence database table | Read, add, edit, and delete rows in Confluence databases via browser automation (Playwright + Firefox SSO). |
 | [refinement](skills/refinement/) | User wants to create, refine, or groom work items, or mentions refinement, sprint planning, or acceptance criteria | Guided workflow for refining Epics, Features, and Stories on Azure DevOps — from context gathering through drafting to saving. |
 | [release-strategy](skills/release-strategy/) | Working on release pipelines, hotfixes, rollbacks, changelogs, or conventional commit enforcement | Reference for the single-track-forward release process using git-cliff + cargo-workspaces, including hotfix and rollback procedures. |
-| [rust-style-review](skills/rust-style-review/) | User asks to check Rust style compliance, audit against style guides, or produce a style improvement plan | Reviews Rust code for compliance with official Rust API Guidelines and Microsoft Pragmatic Rust guidelines. Runs clippy/fmt, checks against fetched guidelines, and outputs an improvement plan via plan mode. |
+| [rust-style-review](skills/rust-style-review/) | User asks to check Rust style compliance, audit against style guides, or produce a style improvement plan | Reviews Rust code for compliance with the Rust Style Guide, Rust API Guidelines, and Microsoft Pragmatic Rust guidelines. Runs clippy/fmt, checks against fetched guidelines, and outputs an improvement plan via plan mode. |
 
 ## Requirements
 
