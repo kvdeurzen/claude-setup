@@ -76,6 +76,14 @@ hooks/my-hook/
 
 The `command` field is auto-generated at install time based on the script file's location and extension (`.sh` → `bash`, `.js` → `node`, `.py` → `python3`).
 
+## Skills
+
+| Skill | Trigger | Description |
+|-------|---------|-------------|
+| [confluence-db](skills/confluence-db/) | User mentions "Confluence database" or wants to read/write a Confluence database table | Read, add, edit, and delete rows in Confluence databases via browser automation (Playwright + Firefox SSO). |
+| [refinement](skills/refinement/) | User wants to create, refine, or groom work items, or mentions refinement, sprint planning, or acceptance criteria | Guided workflow for refining Epics, Features, and Stories on Azure DevOps — from context gathering through drafting to saving. |
+| [release-strategy](skills/release-strategy/) | Working on release pipelines, hotfixes, rollbacks, changelogs, or conventional commit enforcement | Reference for the single-track-forward release process using git-cliff + cargo-workspaces, including hotfix and rollback procedures. |
+
 ## Requirements
 
 - `jq` (for hook installation/uninstall — JSON manipulation of settings.json)
