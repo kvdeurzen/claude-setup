@@ -47,6 +47,33 @@ hooks/           → ~/.claude/hooks/        (symlinked + settings.json merge)
 
 Without flags, nothing is installed — you must be explicit.
 
+## Skills
+
+| Skill | Trigger | Description |
+|-------|---------|-------------|
+| [confluence-db](skills/confluence-db/) | User mentions "Confluence database" or wants to read/write a Confluence database table | Read, add, edit, and delete rows in Confluence databases via browser automation (Playwright + Firefox SSO). |
+| [refinement](skills/refinement/) | User wants to create, refine, or groom work items, or mentions refinement, sprint planning, or acceptance criteria | Guided workflow for refining Epics, Features, and Stories on Azure DevOps — from context gathering through drafting to saving. |
+| [release-strategy](skills/release-strategy/) | Working on release pipelines, hotfixes, rollbacks, changelogs, or conventional commit enforcement | Reference for the single-track-forward release process using git-cliff + cargo-workspaces, including hotfix and rollback procedures. |
+| [rust-style-review](skills/rust-style-review/) | User asks to check Rust style compliance, audit against style guides, or produce a style improvement plan | Reviews Rust code for compliance with the Rust Style Guide, Rust API Guidelines, and Microsoft Pragmatic Rust guidelines. Runs clippy/fmt, checks against fetched guidelines, and outputs an improvement plan via plan mode. |
+
+## Hooks
+
+| Hook | Event | Description |
+|------|-------|-------------|
+| [update-check](hooks/update-check/) | SessionStart | Checks if the local claude-setup repo is behind its remote and warns via system message if updates are available. |
+
+## Agents
+
+*None yet.*
+
+## Rules
+
+*None yet.*
+
+## Output Styles
+
+*None yet.*
+
 ## How It Works
 
 - **Skills, agents, rules, output-styles**: Symlinked into `~/.claude/<category>/`. Edits in the repo are immediately live.
@@ -54,9 +81,69 @@ Without flags, nothing is installed — you must be explicit.
 - The installer never overwrites existing non-symlink items — it warns and skips.
 - `settings.json` is backed up to `settings.json.bak` before hook modifications.
 
-## Adding a Hook
+## Adding New Items
 
-Create a directory under `hooks/`:
+### Adding a Skill
+
+Create a directory under `skills/` with a `SKILL.md`:
+
+```
+skills/my-skill/
+├── SKILL.md
+└── (optional supporting files)
+```
+
+`SKILL.md` must have YAML frontmatter with at least `name` and `description`:
+
+```yaml
+---
+name: my-skill
+description: "When this skill triggers and what it does."
+---
+
+# My Skill
+
+Skill instructions go here...
+```
+
+Optional fields:
+- `allowed-tools` — comma-separated list of tools the skill can use (defaults to all)
+
+Supporting files (scripts, configs, requirements.txt) go in the same directory. Add a `SETUP.md` if the skill requires one-time setup (e.g., installing dependencies, configuring credentials).
+
+### Adding an Agent
+
+Create a file or directory under `agents/`:
+
+```
+agents/my-agent.md
+```
+
+Agent files follow the Claude Code agent format with YAML frontmatter.
+
+### Adding a Rule
+
+Create a file or directory under `rules/`:
+
+```
+rules/my-rule.md
+```
+
+Rules are markdown files that provide persistent instructions loaded into every session.
+
+### Adding an Output Style
+
+Create a file or directory under `output-styles/`:
+
+```
+output-styles/my-style.md
+```
+
+Output styles control how Claude formats its responses.
+
+### Adding a Hook
+
+Create a directory under `hooks/` with a `hook.json` and a script:
 
 ```
 hooks/my-hook/
@@ -64,7 +151,8 @@ hooks/my-hook/
 └── script.sh
 ```
 
-`hook.json`:
+`hook.json` defines when the hook runs:
+
 ```json
 {
   "event": "PreToolUse",
@@ -76,14 +164,11 @@ hooks/my-hook/
 
 The `command` field is auto-generated at install time based on the script file's location and extension (`.sh` → `bash`, `.js` → `node`, `.py` → `python3`).
 
-## Skills
+Hook scripts should output JSON to communicate with Claude Code:
 
-| Skill | Trigger | Description |
-|-------|---------|-------------|
-| [confluence-db](skills/confluence-db/) | User mentions "Confluence database" or wants to read/write a Confluence database table | Read, add, edit, and delete rows in Confluence databases via browser automation (Playwright + Firefox SSO). |
-| [refinement](skills/refinement/) | User wants to create, refine, or groom work items, or mentions refinement, sprint planning, or acceptance criteria | Guided workflow for refining Epics, Features, and Stories on Azure DevOps — from context gathering through drafting to saving. |
-| [release-strategy](skills/release-strategy/) | Working on release pipelines, hotfixes, rollbacks, changelogs, or conventional commit enforcement | Reference for the single-track-forward release process using git-cliff + cargo-workspaces, including hotfix and rollback procedures. |
-| [rust-style-review](skills/rust-style-review/) | User asks to check Rust style compliance, audit against style guides, or produce a style improvement plan | Reviews Rust code for compliance with the Rust Style Guide, Rust API Guidelines, and Microsoft Pragmatic Rust guidelines. Runs clippy/fmt, checks against fetched guidelines, and outputs an improvement plan via plan mode. |
+```json
+{"continue": true, "systemMessage": "optional warning shown below the prompt"}
+```
 
 ## Requirements
 
