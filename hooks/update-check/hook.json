@@ -1,0 +1,5 @@
+{
+  "event": "SessionStart",
+  "type": "command",
+  "timeout": 10
+}
