@@ -81,7 +81,7 @@ Without flags, nothing is installed — you must be explicit.
 - The installer never overwrites existing non-symlink items — it warns and skips.
 - `settings.json` is backed up to `settings.json.bak` before hook modifications.
 
-## Adding New Items
+## Contributing
 
 ### Adding a Skill
 
