@@ -43,10 +43,22 @@ ok()  { echo "  ✓ $1"; }
 warn() { echo "  ⚠ $1"; }
 err() { echo "  ✗ $1" >&2; }
 
+# Portable readlink -f (works on macOS without coreutils)
+resolve_path() {
+  local path="$1"
+  local dir
+  while [[ -L "$path" ]]; do
+    dir="$(cd "$(dirname "$path")" && pwd)"
+    path="$(readlink "$path")"
+    [[ "$path" != /* ]] && path="$dir/$path"
+  done
+  cd "$(dirname "$path")" && echo "$(pwd)/$(basename "$path")"
+}
+
 # Check if a path is a symlink pointing into this repo
 is_our_symlink() {
   local path="$1"
-  [[ -L "$path" ]] && [[ "$(readlink -f "$path")" == "${SCRIPT_DIR}/"* ]]
+  [[ -L "$path" ]] && [[ "$(resolve_path "$path")" == "${SCRIPT_DIR}/"* ]]
 }
 
 # ── Symlink-based install (skills, agents, rules, output-styles) ─────────────

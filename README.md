@@ -4,22 +4,22 @@ Personal Claude Code extensions — skills, agents, rules, output-styles, and ho
 
 ## Quick Start
 
+**Linux / macOS:**
 ```bash
-# Install everything
-./install.sh --all
+./install.sh --all                # Install everything
+./install.sh --all-skills         # Install specific categories
+./install.sh skills/refinement    # Install specific items
+./install.sh --list               # See what's available and installed
+./install.sh --uninstall          # Remove everything managed by this repo
+```
 
-# Install specific categories
-./install.sh --all-skills
-./install.sh --all-hooks
-
-# Install specific items
-./install.sh skills/refinement skills/confluence-db
-
-# See what's available and installed
-./install.sh --list
-
-# Remove everything managed by this repo
-./install.sh --uninstall
+**Windows (PowerShell):**
+```powershell
+.\install.ps1 -All                # Install everything
+.\install.ps1 -AllSkills          # Install specific categories
+.\install.ps1 skills/refinement   # Install specific items
+.\install.ps1 -List               # See what's available and installed
+.\install.ps1 -Uninstall          # Remove everything managed by this repo
 ```
 
 ## Structure
@@ -87,5 +87,10 @@ The `command` field is auto-generated at install time based on the script file's
 
 ## Requirements
 
+**Linux / macOS:**
 - `jq` (for hook installation/uninstall — JSON manipulation of settings.json)
 - Bash 4+ (uses associative arrays)
+
+**Windows:**
+- PowerShell 5.1+ (ships with Windows 10/11) or PowerShell 7+
+- Developer Mode enabled (Settings > For Developers) or run as Administrator (for symlink creation)
